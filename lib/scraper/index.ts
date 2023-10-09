@@ -102,14 +102,14 @@ export async function scrapeAmazonProduct(url: string) {
       discountRate: Number(discountRate),
       category: "category",
       stars: Number(stars),
-      reviews: reviews,
+      reviewsCount: reviews,
       isOutOfStock: outOffStock,
       lowestPrice: Number(currentPrice),
       highestPrice: Number(originalPrice),
       averagePrice: Number(currentPrice),
     };
 
-    // console.log(data);
+    console.log(data);
     return data;
   } catch (error: any) {
     throw new Error(`Failed to scrape product: ${error.message}`);
