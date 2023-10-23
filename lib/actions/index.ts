@@ -6,6 +6,8 @@ import Product from "../models/product.model";
 import { scrapeAmazonProduct } from "../scraper/index";
 import { connectToDB } from "../mongoose";
 import { getAveragePrice, getHighestPrice, getLowestPrice } from "../utils";
+import { User } from "@/types/index";
+import { generateEmailBody, sendEmail } from "../nodemailer/index";
 
 //will run on server not on client side
 
@@ -87,6 +89,35 @@ export async function getSimilarProducts(productId: string) {
     // console.log("similar Products" + similarProducts);
 
     return similarProducts;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function addUserEmailToProduct(
+  productId: string,
+  userEmail: string
+) {
+  try {
+    const product = await Product.findById(productId);
+
+    if (!product) return;
+    // type like User
+    const userExists = product.users.some(
+      (user: User) => user.email === userEmail
+    ); /*.some() method: The some method is an array method in 
+    JavaScript. It checks whether at least one element in the array satisfies the given condition. */
+
+    if (!userExists) {
+      product.users.push({ email: userEmail });
+
+      await product.save(); //to save product
+
+      const emailContent = generateEmailBody(product, "WELCOME");
+
+      //function to send email
+      // await sendEmail(emailContent, [userEmail]);
+    }
   } catch (error) {
     console.log(error);
   }

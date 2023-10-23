@@ -1,12 +1,28 @@
 "use client";
 
-import React, { Fragment } from "react";
+import React, { FormEvent, Fragment } from "react";
 import { useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
 
 const Modal = () => {
   let [isOpen, setIsOpen] = useState(false);
+
+  const [isSubmitting, setSubmitting] = useState(false);
+  const [email, setEmail] = useState("");
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    //FormEvent<HTMLFormElement> is used to specify the type of the e parameter in the handleSubmit function If you simply write e instead of specifying the type as FormEvent<HTMLFormElement>, TypeScript will still allow it, but you lose some of the benefits that TypeScript provides in terms of type checking and code documentation.
+    // prevent the page to reload
+    e.preventDefault();
+    setSubmitting(true);
+
+    //await addUserEmailToProduct(email, product.id)
+
+    setSubmitting(false);
+    setEmail("");
+    closeModel();
+  };
 
   const openModel = () => setIsOpen(true);
 
@@ -75,7 +91,7 @@ const Modal = () => {
                   </p>
                 </div>
 
-                <form className="flex flex-col mt-5">
+                <form className="flex flex-col mt-5" onSubmit={handleSubmit}>
                   <label
                     htmlFor="email"
                     className="text-sm font-medium text-gray-700"
@@ -93,13 +109,15 @@ const Modal = () => {
                       required
                       type="email"
                       id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email addresh"
                       className=" dialog-input"
                     />
                   </div>
 
                   <button type="submit" className="dialog-btn">
-                    Track
+                    {isSubmitting ? "Submitting..." : "Track"}
                   </button>
                 </form>
               </div>
