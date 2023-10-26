@@ -1,5 +1,7 @@
 "use server";
 
+//THIS FILE IS FOR VARIOUS FUNCTIONS
+
 import { revalidatePath } from "next/cache";
 
 import Product from "../models/product.model";
@@ -94,6 +96,7 @@ export async function getSimilarProducts(productId: string) {
   }
 }
 
+//ADD USER EMAIL TO DM AND SEND EMAIL
 export async function addUserEmailToProduct(
   productId: string,
   userEmail: string
@@ -113,10 +116,11 @@ export async function addUserEmailToProduct(
 
       await product.save(); //to save product
 
-      const emailContent = generateEmailBody(product, "WELCOME");
+      const emailContent = await generateEmailBody(product, "WELCOME");
 
+      // console.log("emailContent ", emailContent);
       //function to send email
-      // await sendEmail(emailContent, [userEmail]);
+      await sendEmail(emailContent, [userEmail]);
     }
   } catch (error) {
     console.log(error);

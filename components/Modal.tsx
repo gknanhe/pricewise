@@ -1,11 +1,17 @@
 "use client";
+//THIS FILE IS FOR EMAIL POPUP AND SEND MAIL
 
 import React, { FormEvent, Fragment } from "react";
 import { useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import Image from "next/image";
+import { addUserEmailToProduct } from "@/lib/actions/index";
 
-const Modal = () => {
+interface Props {
+  productId: string;
+}
+
+const Modal = ({ productId }: Props) => {
   let [isOpen, setIsOpen] = useState(false);
 
   const [isSubmitting, setSubmitting] = useState(false);
@@ -17,7 +23,7 @@ const Modal = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    //await addUserEmailToProduct(email, product.id)
+    await addUserEmailToProduct(productId, email);
 
     setSubmitting(false);
     setEmail("");

@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@types/nodemailer": "^6.4.13",
     "axios": "^1.5.1",
     "cheerio": "^1.0.0-rc.12",
     "mongoose": "^7.6.0",
     "next": "^13.5.4",
     "nodemailer": "^6.9.7",
+    "nodemailer-smtp-transport": "^2.7.4",
     "react": "^18",
     "react-dom": "^18",
     "react-responsive-carousel": "^3.2.23"

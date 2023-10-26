@@ -1,3 +1,5 @@
+"use server";
+
 import {
   EmailContent,
   EmailProductInfo,
@@ -5,9 +7,12 @@ import {
 } from "@/types/index";
 import nodemailer from "nodemailer";
 
-export const THRESHOLD_PERCENTAGE = 40;
+import smtpTransport from "nodemailer-smtp-transport";
 
-export const Notification = {
+//IF PRICE DROPS 40%
+// export const THRESHOLD_PERCENTAGE = 40;
+
+const Notification = {
   WELCOME: "WELCOME",
   CHANGE_OF_STOCK: "CHANGE_OF_STOCK",
   LOWEST_PRICE: "LOWEST_PRICE",
@@ -20,6 +25,7 @@ export async function generateEmailBody(
   product: EmailProductInfo,
   type: NotificationType
 ) {
+  //IF PRICE DROPS 40%
   const THRESHOLD_PERCENTAGE = 40;
   // Shorten the product title
   const shortenedTitle =
@@ -42,7 +48,7 @@ export async function generateEmailBody(
               <h3>${product.title} is back in stock!</h3>
               <p>We're excited to let you know that ${product.title} is now back in stock.</p>
               <p>Don't miss out - <a href="${product.url}" target="_blank" rel="noopener noreferrer">buy it now</a>!</p>
-              <img src="https://i.ibb.co/pwFBRMC/Screenshot-2023-09-26-at-1-47-50-AM.png" alt="Product Image" style="max-width: 100%;" />
+              <img src="${product.image}" alt="Product Image" style="max-width: 100%;" />
             </div>
             <p>Stay tuned for more updates on ${product.title} and other products you're tracking.</p>
           </div>
@@ -86,6 +92,17 @@ export async function generateEmailBody(
   return { subject, body };
 }
 
+var transporter = nodemailer.createTransport(
+  smtpTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    auth: {
+      user: "iam.nanhe33@gmail.com",
+      pass: process.env.EMAIL_PASS,
+    },
+  })
+);
+
 //function to send email
 
 export const sendEmail = async (
@@ -93,9 +110,16 @@ export const sendEmail = async (
   sendTo: string[]
 ) => {
   const mailOptions = {
-    from: "",
+    from: "iam.nanhe33@gmail.com",
     to: sendTo,
     html: emailContent.body,
     subject: emailContent.subject,
   };
+
+  //sends mail
+  transporter.sendMail(mailOptions, (error: any, info: any) => {
+    if (error) return console.log(error);
+    console.log("Email sent: ", info);
+    // do something useful
+  });
 };
