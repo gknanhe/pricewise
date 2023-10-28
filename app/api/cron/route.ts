@@ -12,6 +12,14 @@ import {
 } from "@/lib/utils";
 import { NextResponse } from "@/node_modules/next/server";
 
+//Some changes to deploy to vercel
+
+export const maxDuration = 300; //5 minutes
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+//
+
 export async function GET() {
   try {
     //COnnect To DB Before
@@ -47,7 +55,7 @@ export async function GET() {
         };
 
         const updatedProduct = await Product.findOneAndUpdate(
-          { url: scrapedProduct.url },
+          { url: product.url },
           product
         );
 
