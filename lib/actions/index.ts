@@ -18,7 +18,7 @@ export async function scrapeAndStoreProduct(productUrl: string) {
 
   try {
     // console.log("caling conectDB");
-    connectToDB();
+    await connectToDB();
 
     const scrapedProduct = await scrapeAmazonProduct(productUrl);
 
@@ -50,7 +50,10 @@ export async function scrapeAndStoreProduct(productUrl: string) {
       { upsert: true, new: true }
     );
 
+    console.log("newP ", newProduct);
+
     revalidatePath(`/products/${newProduct._id}`);
+    // return newProduct;
   } catch (error: any) {
     throw new Error(`Failed to create/update product: ${error.message}`);
   }
@@ -70,7 +73,7 @@ export async function getProductById(productId: string) {
 
 export async function getAllProducts() {
   try {
-    const products = await Product.find();
+    const products = await Product.find().sort("-createdAt");
     return products;
   } catch (error) {
     console.log(error);

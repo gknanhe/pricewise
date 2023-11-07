@@ -1,8 +1,11 @@
 "use client";
 
-import { scrapeAndStoreProduct } from "@/lib/actions/index";
+import { getProductById, scrapeAndStoreProduct } from "@/lib/actions/index";
 import { url } from "inspector";
 import { FormEvent, useState } from "react";
+
+//if serch succesfull
+import { useRouter } from "next/router";
 
 const Searchbar = () => {
   const [serachPrompt, setSerachPrompt] = useState("");
@@ -39,7 +42,12 @@ const Searchbar = () => {
 
       //scrape the product
 
-      const product = await scrapeAndStoreProduct(serachPrompt);
+      const productId = await scrapeAndStoreProduct(serachPrompt);
+      // if (!productId) return;
+
+      // const product = await getProductById(productId);
+      // console.log("product ", productId);
+      setIsLoading(false);
     } catch (error) {
       console.log(error);
     } finally {

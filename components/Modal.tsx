@@ -65,7 +65,7 @@ const Modal = ({ productId }: Props) => {
               enterTo="opacity-100 scale-100"
               leave="ease-in duration-200"
               leaveFrom="opacity-100 scale-100"
-              leaveto="opacity-0 scale-95"
+              leaveTo="opacity-0 scale-95"
             >
               <div className="dialog-content">
                 <div className="flex flex-col">
