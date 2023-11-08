@@ -13,7 +13,7 @@ export type Product = {
   image: string;
   title: string;
   currentPrice: number;
-  originalPrice: number;
+  originalPrice: number | null;
   priceHistory: PriceHistoryItem[] | [];
   highestPrice: number;
   lowestPrice: number;
