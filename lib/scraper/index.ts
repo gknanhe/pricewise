@@ -57,7 +57,7 @@ export async function scrapeAmazonProduct(url: string) {
     const images =
       $("#imgBlkFront").attr("data-a-dynamic-image") ||
       $("#landingImage").attr("data-a-dynamic-image") ||
-      {};
+      "{}";
 
     const imageUrls = Object.keys(JSON.parse(images));
 
