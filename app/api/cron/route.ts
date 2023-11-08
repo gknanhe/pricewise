@@ -14,7 +14,7 @@ import { NextResponse } from "@/node_modules/next/server";
 
 //Some changes to deploy to vercel
 
-export const maxDuration = 300; //5 minutes
+export const maxDuration = 10; //300; //5 minutes It can only set with pro plans
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
