@@ -25,6 +25,7 @@
   "devDependencies": {
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20",
+    "@types/nodemailer-smtp-transport": "^2.7.8",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
