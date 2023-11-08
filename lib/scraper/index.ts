@@ -113,12 +113,12 @@ export async function scrapeAmazonProduct(url: string) {
       priceHistory: [],
       discountRate: isNaN(Number(discountRate)) ? 0 : Number(discountRate),
       category: "category",
-      stars: isNaN(stars) ? 0 : Number(stars),
+      stars: isNaN(Number(stars)) ? 0 : Number(stars),
       reviewsCount: reviews,
       isOutOfStock: outOffStock,
-      lowestPrice: isNaN(currentPrice) ? 0 : Number(currentPrice),
-      highestPrice: isNaN(originalPrice) ? 0 : Number(originalPrice),
-      averagePrice: isNaN(currentPrice) ? 0 : Number(currentPrice),
+      lowestPrice: isNaN(Number(currentPrice)) ? 0 : Number(currentPrice),
+      highestPrice: isNaN(Number(originalPrice)) ? 0 : Number(originalPrice),
+      averagePrice: isNaN(Number(currentPrice)) ? 0 : Number(currentPrice),
     };
 
     console.log(data);
